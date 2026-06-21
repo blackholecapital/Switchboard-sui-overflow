@@ -1,2 +1,3 @@
-# Switchboard-sui-overflow
-switchboard demo sui overflow 2026 
+# Switchboard OS
+
+AI-native business operating system with CRM, billing, storage, treasury, automation, documents, communications, and blockchain infrastructure.
