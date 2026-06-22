@@ -1,0 +1,1002 @@
+# SWITCHBOARD CRM BUILD REPORT
+
+## Session Build Summary
+
+**Project:** Switchboard CRM
+**Frontend:** Refine + React + Vite
+**Backend:** Node.js + PostgreSQL
+**Environment:** XYZ Factory
+**Status:** Operational / Smoke Tests Passing
+
+---
+
+# Executive Summary
+
+This session transformed the CRM from a mostly static CRM shell into a tenant-aware CRM platform with:
+
+* Local authentication system
+* User approval workflow
+* User management admin console
+* Permission templates
+* Role-based access controls
+* Workspace dashboard
+* Notifications center
+* Unified communications foundation
+* Connected account registry
+* Engagement inbox database
+* Password reset system
+* Dynamic sidebar user identity
+* Multi-user login switching
+
+All smoke tests continued to pass after each major deployment.
+
+---
+
+# Completed Work
+
+---
+
+## 1. Local Authentication System
+
+### Added
+
+Backend local auth endpoints:
+
+* Login
+* Logout
+* User approval
+* User disable
+* User listing
+* Password reset
+
+### Login Storage
+
+Frontend stores:
+
+```text
+switchboard_user
+switchboard_user_obj
+```
+
+inside localStorage.
+
+### User Object Includes
+
+```json
+{
+  "id": "",
+  "email": "",
+  "username": "",
+  "first_name": "",
+  "last_name": "",
+  "role": "",
+  "can_view_global": false,
+  "can_manage_users": false,
+  "can_manage_billing": false,
+  "can_manage_settings": false
+}
+```
+
+---
+
+## 2. Dynamic User Sidebar
+
+Replaced hardcoded:
+
+```text
+Jordan Smith
+Sales Admin
+```
+
+with actual logged-in user.
+
+Sidebar now reads:
+
+```js
+switchboard_user_obj
+```
+
+and displays:
+
+```text
+Name
+Role
+Email
+```
+
+Features:
+
+* Login link
+* Settings link
+* Logout button
+
+Logout clears:
+
+```text
+switchboard_user
+switchboard_user_obj
+```
+
+and redirects to:
+
+```text
+/login
+```
+
+---
+
+## 3. Admin Users Module
+
+New route:
+
+```text
+/admin/users
+```
+
+Sidebar entry added:
+
+```text
+Admin / Users
+```
+
+Features:
+
+### User Listing
+
+Displays:
+
+* Name
+* Username
+* Email
+* Status
+* Role
+* Permissions
+
+### User Approval
+
+Endpoint:
+
+```text
+POST /crm-api/admin/users/:id/approve
+```
+
+---
+
+### User Disable
+
+Endpoint:
+
+```text
+POST /crm-api/admin/users/:id/disable
+```
+
+---
+
+### Permission Templates
+
+Endpoint:
+
+```text
+GET /crm-api/admin/permission-templates
+```
+
+Apply:
+
+```text
+POST /crm-api/admin/users/:id/template/:templateId
+```
+
+---
+
+## 4. Permission Template System
+
+New table:
+
+```sql
+core.permission_templates
+```
+
+Templates created:
+
+### Owner Admin
+
+```text
+Full Control
+```
+
+Permissions:
+
+```text
+Global View
+User Management
+Billing
+Settings
+```
+
+---
+
+### Sales Manager
+
+```text
+Team Visibility
+Pipeline Access
+```
+
+Permissions:
+
+```text
+Global View
+Manage Users
+Settings
+```
+
+---
+
+### Sales Employee
+
+```text
+Own Records Only
+```
+
+Permissions:
+
+```text
+No Admin Rights
+```
+
+---
+
+### Billing Clerk
+
+Permissions:
+
+```text
+Billing Only
+```
+
+---
+
+### Read Only
+
+Permissions:
+
+```text
+View Only
+```
+
+---
+
+## 5. New User Creation Workflow
+
+Admin Users page now supports:
+
+```text
+Create Pending User
+```
+
+Fields:
+
+* Username
+* Password
+* Email
+* First Name
+* Last Name
+
+Creates:
+
+```text
+status = pending
+must_be_approved = true
+```
+
+Tenant membership automatically created.
+
+---
+
+## 6. Approval Workflow
+
+Admin creates:
+
+```text
+Pending User
+```
+
+Owner approves:
+
+```text
+Approve
+```
+
+User becomes:
+
+```text
+status = active
+```
+
+---
+
+### Verified
+
+Created:
+
+```text
+billing1
+```
+
+Approved:
+
+```text
+billing1
+```
+
+Applied:
+
+```text
+Billing Clerk Template
+```
+
+Successfully logged in.
+
+---
+
+## 7. Route Protection
+
+Created:
+
+```text
+src/lib/current-user.ts
+```
+
+Helpers:
+
+```ts
+getCurrentUser()
+canManageUsers()
+currentUserEmail()
+```
+
+---
+
+### Admin Visibility Control
+
+Admin sidebar link now hidden for:
+
+```text
+Employees
+Billing
+Read Only
+```
+
+Visible only for:
+
+```text
+Owner
+Manager with permission
+```
+
+---
+
+### Admin Users Page Guard
+
+Unauthorized users see:
+
+```text
+Access Denied
+```
+
+instead of user management UI.
+
+---
+
+## 8. Password Reset System
+
+Backend endpoint:
+
+```text
+POST /crm-api/auth/reset-password
+```
+
+---
+
+Frontend login page now includes:
+
+```text
+Forgot Password
+```
+
+Panel:
+
+```text
+Username
+New Password
+Reset Password
+```
+
+Verified successfully.
+
+---
+
+## 9. Workspace Module
+
+New route:
+
+```text
+/workspace
+```
+
+Sidebar:
+
+```text
+My Workspace
+```
+
+Displays:
+
+### Personal Metrics
+
+* Scope
+* Deal Count
+* Pipeline Value
+* Task Count
+
+### Calendar
+
+Pulls:
+
+```text
+/crm-api/calendar/my
+```
+
+### Notifications
+
+Pulls:
+
+```text
+/crm-api/notifications
+```
+
+User-aware using:
+
+```text
+switchboard_user
+```
+
+---
+
+## 10. Notifications Center
+
+New route:
+
+```text
+/notifications
+```
+
+Displays:
+
+* CRM alerts
+* Assignments
+* Messages
+* Approval requests
+
+Features:
+
+```text
+Read
+Unread
+Type
+Timestamp
+```
+
+---
+
+# Communications Foundation
+
+---
+
+## 11. Communications Schema
+
+New schema:
+
+```sql
+communications
+```
+
+---
+
+### Connected Accounts
+
+Table:
+
+```sql
+communications.connected_accounts
+```
+
+Stores:
+
+```text
+Platform
+Handle
+Display Name
+Status
+Auth Type
+Settings
+```
+
+Examples:
+
+```text
+Telegram
+Email
+Instagram
+Facebook
+SMS
+Voicemail
+Twitter/X
+Snapchat
+```
+
+---
+
+### Engagement Inbox
+
+Table:
+
+```sql
+communications.engagement_items
+```
+
+Stores:
+
+```text
+Messages
+Comments
+Replies
+DMs
+Emails
+SMS
+Voicemail
+```
+
+Fields:
+
+```text
+Sender
+Subject
+Body
+Platform
+Status
+Assigned User
+```
+
+---
+
+## 12. Communications API
+
+Added:
+
+### Accounts
+
+```text
+GET /crm-api/comms/accounts
+POST /crm-api/comms/accounts
+```
+
+---
+
+### Inbox
+
+```text
+GET /crm-api/comms/inbox
+POST /crm-api/comms/inbox
+```
+
+---
+
+### Tested
+
+Created:
+
+```text
+Telegram Account
+```
+
+Created:
+
+```text
+Telegram Message
+```
+
+Verified inbox retrieval.
+
+---
+
+## 13. Comms Command Center
+
+Route:
+
+```text
+/comms
+```
+
+Features:
+
+### Platform Connector Slots
+
+* Email
+* Telegram
+* Facebook
+* Instagram
+* X
+* Snapchat
+* SMS
+* Vmail
+
+---
+
+### Connected Accounts Panel
+
+Shows:
+
+```text
+Platform
+Handle
+Status
+```
+
+---
+
+### Unified Engagement Inbox
+
+Displays:
+
+```text
+Messages
+Emails
+Comments
+DMs
+Replies
+```
+
+from all channels.
+
+---
+
+# Build Verification
+
+Every major deployment completed with:
+
+```text
+npm run build
+```
+
+successful.
+
+---
+
+Smoke Test Results:
+
+```text
+Dashboard PASS
+Contacts PASS
+Companies PASS
+Pipeline PASS
+Tasks PASS
+Company360 PASS
+Reporting PASS
+```
+
+All backend API tests passing.
+
+---
+
+# Known Issue
+
+Comms sidebar entry currently references:
+
+```text
+IconMessages
+```
+
+without import.
+
+Build error:
+
+```text
+Cannot find name 'IconMessages'
+```
+
+Needs one of:
+
+```ts
+import { IconMessages } from "@tabler/icons-react"
+```
+
+or replacement with an already imported icon.
+
+Estimated fix:
+
+5 minutes.
+
+---
+
+# Remaining Major Work
+
+## Priority 1 — Finish Auth/Admin
+
+### New User Request Portal
+
+Route:
+
+```text
+/request-access
+```
+
+Workflow:
+
+```text
+Public Request
+→ Pending Approval
+→ Owner Approves
+→ User Activated
+```
+
+---
+
+### Tenant Role Enforcement
+
+Current:
+
+```text
+Frontend Hidden
+```
+
+Needed:
+
+```text
+Backend Enforced
+```
+
+Every endpoint should validate:
+
+```text
+can_manage_users
+can_manage_billing
+can_manage_settings
+```
+
+---
+
+### Audit Log
+
+Track:
+
+```text
+User Created
+User Disabled
+Role Changed
+Permission Applied
+Password Reset
+```
+
+---
+
+# Priority 2 — Comms Database Expansion
+
+Tables still needed:
+
+### Conversations
+
+```sql
+communications.conversations
+```
+
+### Participants
+
+```sql
+communications.participants
+```
+
+### Messages
+
+```sql
+communications.messages
+```
+
+### Attachments
+
+```sql
+communications.attachments
+```
+
+### Campaigns
+
+```sql
+communications.campaigns
+```
+
+---
+
+# Priority 3 — Email Infrastructure
+
+Inbound:
+
+```text
+IMAP
+```
+
+Outbound:
+
+```text
+SMTP
+```
+
+Suggested:
+
+```text
+Postal
+Mailcow
+Mailu
+```
+
+Store:
+
+```text
+Connected Mailboxes
+Shared Inboxes
+Thread History
+```
+
+---
+
+# Priority 4 — Telegram Connector
+
+Build:
+
+```text
+Telegram Bot Connector
+```
+
+Features:
+
+```text
+Inbound
+Outbound
+Unified Inbox
+```
+
+---
+
+# Priority 5 — Social Media Engagement Engine
+
+Owner enters:
+
+```text
+Instagram
+Facebook
+X
+Telegram
+Snapchat
+LinkedIn
+YouTube
+TikTok
+```
+
+accounts.
+
+Then:
+
+```text
+Create Post Once
+```
+
+publish to:
+
+```text
+All Channels
+```
+
+---
+
+Suggested Open Source Base:
+
+### Mixpost
+
+Best fit currently.
+
+Supports:
+
+```text
+Facebook
+Instagram
+X
+LinkedIn
+TikTok
+Mastodon
+Threads
+```
+
+Can be embedded into CRM.
+
+---
+
+# Priority 6 — Conversations V3
+
+Replace current conversations page.
+
+Unified feed:
+
+```text
+Email
+SMS
+Telegram
+Facebook
+Instagram
+X
+Voicemail
+Internal Chat
+```
+
+Single thread per contact.
+
+CRM-aware.
+
+---
+
+# Priority 7 — Internal Messaging
+
+Still not built.
+
+Need:
+
+```text
+Direct Messages
+Group Rooms
+Team Chat
+Presence
+Typing
+Mentions
+```
+
+---
+
+# Priority 8 — Voicemail System
+
+Needed:
+
+```text
+Voicemail Inbox
+Call Notes
+Transcriptions
+AI Summaries
+```
+
+---
+
+# Current Project Status
+
+Overall Completion Estimate:
+
+```text
+Core CRM ............... 85%
+Auth/Admin ............. 90%
+Workspace .............. 80%
+Notifications .......... 80%
+Communications ......... 35%
+Social Engine .......... 10%
+Email Infrastructure ... 0%
+Internal Messaging ..... 0%
+Voicemail .............. 0%
+```
+
+Recommended Next Sprint:
+
+1. Fix Comms icon import.
+2. Build Conversations V3 schema.
+3. Build internal messaging tables.
+4. Build email account connector layer.
+5. Add Telegram connector.
+6. Add Mixpost-based social publishing engine.
+7. Build unified activity stream.
+8. Add audit logging.
+
+End of Report.

@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#eef6ff"/>
+      <stop offset="100%" stop-color="#ffffff"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#0f172a" flood-opacity=".12"/>
+    </filter>
+    <style>
+      .title{font:700 34px Inter,Arial,sans-serif;fill:#0f172a}
+      .sub{font:500 16px Inter,Arial,sans-serif;fill:#475569}
+      .box{fill:white;stroke:#bfdbfe;stroke-width:2;rx:22;filter:url(#shadow)}
+      .blue{fill:#2563eb}
+      .label{font:700 18px Inter,Arial,sans-serif;fill:#0f172a}
+      .tiny{font:500 13px Inter,Arial,sans-serif;fill:#64748b}
+      .arrow{stroke:#2563eb;stroke-width:3;marker-end:url(#arrow)}
+    </style>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#2563eb"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="760" fill="url(#bg)"/>
+  <text x="60" y="70" class="title">Switchboard OS Architecture</text>
+  <text x="60" y="100" class="sub">AI-native business workflows with Sui payments, attestations, storage, treasury, and CRM operations.</text>
+
+  <rect x="60" y="150" width="250" height="120" class="box"/>
+  <text x="90" y="190" class="label">Business User</text>
+  <text x="90" y="220" class="tiny">CRM, billing, docs, storage</text>
+  <text x="90" y="244" class="tiny">normal business actions</text>
+
+  <rect x="380" y="120" width="290" height="180" class="box"/>
+  <text x="410" y="160" class="label">Switchboard OS</text>
+  <text x="410" y="190" class="tiny">Billing360 · Storage360</text>
+  <text x="410" y="214" class="tiny">Documents360 · Treasury360</text>
+  <text x="410" y="238" class="tiny">CRM · Automation · AI sidecars</text>
+  <text x="410" y="262" class="tiny">shared module architecture</text>
+
+  <rect x="740" y="120" width="330" height="180" class="box"/>
+  <text x="770" y="160" class="label">Sui Integration Layer</text>
+  <text x="770" y="190" class="tiny">Sui wallet connection</text>
+  <text x="770" y="214" class="tiny">USDC payment flow</text>
+  <text x="770" y="238" class="tiny">transaction receipts</text>
+  <text x="770" y="262" class="tiny">on-chain attestations</text>
+
+  <rect x="90" y="390" width="260" height="145" class="box"/>
+  <text x="120" y="430" class="label">Billing360</text>
+  <text x="120" y="460" class="tiny">invoice creation</text>
+  <text x="120" y="484" class="tiny">PayMe checkout</text>
+  <text x="120" y="508" class="tiny">Stripe + Sui USDC</text>
+
+  <rect x="470" y="390" width="260" height="145" class="box"/>
+  <text x="500" y="430" class="label">Storage360</text>
+  <text x="500" y="460" class="tiny">backup controls</text>
+  <text x="500" y="484" class="tiny">Walrus records</text>
+  <text x="500" y="508" class="tiny">Sui receipt history</text>
+
+  <rect x="850" y="390" width="260" height="145" class="box"/>
+  <text x="880" y="430" class="label">Treasury360</text>
+  <text x="880" y="460" class="tiny">wallet visibility</text>
+  <text x="880" y="484" class="tiny">live balance view</text>
+  <text x="880" y="508" class="tiny">payment operations</text>
+
+  <path d="M310 210 C340 210 350 210 380 210" class="arrow"/>
+  <path d="M670 210 C700 210 710 210 740 210" class="arrow"/>
+  <path d="M525 300 L220 390" class="arrow"/>
+  <path d="M525 300 L600 390" class="arrow"/>
+  <path d="M525 300 L980 390" class="arrow"/>
+
+  <text x="60" y="665" class="sub">Public repository includes documentation, workflow maps, selected interface code, screenshots, and demo materials. Proprietary retrieval, orchestration, and warehouse internals are available for review by request.</text>
+</svg>
