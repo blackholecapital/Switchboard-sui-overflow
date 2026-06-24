@@ -1,5 +1,13 @@
 # Switchboard OS
 
+Demo Proofs 
+
+https://suivision.xyz/account/0xcfd61e24943e826f61dca8f6ec540bb505c9da72d7a53b2637dbd332b2e7f6b5?tab=Activity        backups and attestations
+
+https://suivision.xyz/account/0x1c72d3d74d9b06683935d9ae7077cb489833550cfbb75c4e0a1c16f35d86e440?tab=Activity       recieved payment
+
+https://suivision.xyz/account/0x33f249da5380009bc04c567deb12dec9b57586ab3eede39a441e6fdad5fbd644?tab=Activity       paid invoice 
+
 ![Switchboard OS Architecture](assets/switchboard-architecture.svg)
 
 **Switchboard OS** is an AI-native business operating system that connects CRM, billing, storage, treasury operations, document workflows, communications, automation, and blockchain infrastructure into one modular platform.
